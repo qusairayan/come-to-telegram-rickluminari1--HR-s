@@ -105,11 +105,10 @@
                     </td>
                     @php
                         $locations = json_decode($attendence->location_id, true);
-                        dd($locations)
                     @endphp
                     <td class="border-0 fw-bold">
                         <span class="fw-normal">
-                            {{ $locations[0] }}
+                            {{ $locations[0] ?? "" }}
                         </span>
                     </td>
                     <td class="border-0 fw-bold">
@@ -119,7 +118,7 @@
                     </td>
                     <td class="border-0 fw-bold">
                         <span class="fw-normal">
-                            {{ $locations[1] }}
+                            {{ $locations[1] ?? "" }}
                         </span>
                     </td>
                     <td class="border-0 fw-bold">
