@@ -76,7 +76,9 @@
                 <th class="border-gray-200">Employee</th>
                 <th class="border-gray-200">Department</th>
                 <th class="border-gray-200">Date</th>
+                <th class="border-gray-200">check In Location</th>
                 <th class="border-gray-200">IN</th>
+                <th class="border-gray-200">check Out Location</th>
                 <th class="border-gray-200">OUT</th>
             </tr>
         </thead>
@@ -86,30 +88,37 @@
 
             @foreach ($attendances as $attendence)
                 <tr>
-                   
                     <td class="border-0 fw-bold">
                         <span class="fw-normal">
                             {{ $attendence->user_name }}
                         </span>
                     </td>
-
-
-
                     <td class="border-0 fw-bold">
                         <span class="fw-normal">
                             {{ $attendence->department_name }}
                         </span>
                     </td>
-
                     <td class="border-0 fw-bold">
                         <span class="fw-normal">
                             {{ $attendence->date }}
                         </span>
                     </td>
-
+                    @php
+                        $locations = json_decode($attendence->location_id, true);
+                    @endphp
+                    <td class="border-0 fw-bold">
+                        <span class="fw-normal">
+                            {{ $locations[0] }}
+                        </span>
+                    </td>
                     <td class="border-0 fw-bold">
                         <span class="fw-normal">
                             {{ $attendence->check_in }}
+                        </span>
+                    </td>
+                    <td class="border-0 fw-bold">
+                        <span class="fw-normal">
+                            {{ $locations[1] }}
                         </span>
                     </td>
                     <td class="border-0 fw-bold">

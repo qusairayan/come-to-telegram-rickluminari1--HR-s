@@ -50,24 +50,24 @@ class DeductionsController extends Component
 
     public function approve($deductionId)
     {
-        // if(isset($deduction['violation_number'])){
-        //     Deductions::create([
-        //         "user_id"=>$deduction["user_id"],
-        //         "type"=>1 ,
-        //          "amount"=>$deduction["amount"],
-        //          "date"=>$deduction["date"],
-        //          "detail"=>$deduction["violation_reason"],
-        //          "status"=>1,
-        //     ]);
-        //     $deduction = TrafficViolations::findOrFail($deduction["id"]);
-        //     $deduction->status = 1;
-        //     $deduction->save();
-        // }
-        // else {
+        if(isset($deduction['violation_number'])){
+            Deductions::create([
+                "user_id"=>$deduction["user_id"],
+                "type"=>1 ,
+                 "amount"=>$deduction["amount"],
+                 "date"=>$deduction["date"],
+                 "detail"=>$deduction["violation_reason"],
+                 "status"=>1,
+            ]);
+            $deduction = TrafficViolations::findOrFail($deduction["id"]);
+            $deduction->status = 1;
+            $deduction->save();
+        }
+        else {
             $deduction = Deductions::findOrFail($deductionId);
             $deduction->status = 1;
             $deduction->save();
-        // }
+        }
 
     }
 

@@ -13,6 +13,7 @@ use App\Http\Controllers\api\Auth\RegisterController;
 use App\Http\Controllers\api\Auth\LogoutController;
 use App\Http\Controllers\api\Auth\ResetPassword;
 use App\Http\Controllers\api\Auth\VerfyOtpController;
+use App\Http\Controllers\Api\EmployeeSalariesReport;
 use App\Http\Controllers\api\Leave\LeaveController;
 use App\Http\Controllers\api\leaves\LeaveReqController;
 use App\Http\Controllers\api\leaves\GetLeaveController;
@@ -50,7 +51,6 @@ Route::post("/delete",[RegisterController::class,"destroy"])->name("delete");
 Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
 Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
 Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
-
 // new api
 Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(function(){
     Route::post("login"          , [AuthLoginController::class          ,'login' ])->name("login");
@@ -59,6 +59,7 @@ Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(funct
     Route::post('verfy-otp'      , [VerfyOtpController::class, 'verifyOtp'])->name("verfyOtp");
     Route::post('reset-password' , [ResetPassword::class, 'ResetPassword'])->name("resetPassword");
 });
+Route::post('EmployeeSalariesReport'         , [EmployeeSalariesReport::class, 'index'])->name("employeeSalariesReport")->middleware("guest:sanctum");
 Route::middleware(["auth:sanctum"])->group(function(){
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
     Route::get("locations",[LocationController::class,"get"])->name("locations.get");
