@@ -56,7 +56,6 @@ class LoginController extends Controller
                 "username" => $request->username,
                 "email" => $email,
                 "department" => $department,
-                "department" => $department,
                 "image" => $img,
                 "UserStatus" => $status, "company_name" => $company_name,
                 "latitude" => $company_lat, "longitude" => $company_long,
