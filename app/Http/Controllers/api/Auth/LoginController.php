@@ -15,9 +15,10 @@ class LoginController extends Controller{
             if($user->status === 0){
                 return response()->json(["message"=>"Your account is inactive"],401);
             }else{
-                $user->tokens()->delete();
-                $user->department  = $user->department->name ;
-                $user = $user->makeHidden("password","email_verified_at","created_at","updated_at","salary","bank","IBAN","part_time","type","status","unemployment_date","birthday","ID_image","license_image","otp","start_date","Duration_contract","ID_no","department_id","company_id","department");
+                $user->tokens()->delete();                
+                $department = $user->department->name;
+                $user = $user->makeHidden("password","email_verified_at","created_at","updated_at","salary","bank","IBAN","part_time","type","status","unemployment_date","birthday","ID_image","license_image","otp","start_date","Duration_contract","ID_no","department_id","company_id");
+                $user->departments  = $department;
                 $user->company;
                 if ($user->image)$user->image = 'https://'.request()->getHttpHost().'/storage/profile/'.$user->image;
                 $user->token = $user->createToken($request->userAgent())->plainTextToken;

@@ -105,6 +105,7 @@
                     </td>
                     @php
                         $locations = json_decode($attendence->location_id, true);
+                        dd($locations)
                     @endphp
                     <td class="border-0 fw-bold">
                         <span class="fw-normal">
