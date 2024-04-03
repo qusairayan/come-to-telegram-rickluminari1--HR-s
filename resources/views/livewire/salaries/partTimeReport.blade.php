@@ -192,7 +192,7 @@
                 @endif
             </tr>
         @endforeach
-        @if (count($partTime) > 0 && count($data) > 0)
+        @if (count($partTime) > 0 || count($data) > 0)
             <tr>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%"
                     colspan="2">Total:</th>
