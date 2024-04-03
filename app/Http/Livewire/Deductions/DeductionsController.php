@@ -25,8 +25,8 @@ class DeductionsController extends Component
 
     public $amount;
     public $userId;
-    public $date ;
-    public $type ;
+    public $date;
+    public $type;
     public $paginator = 10;
     public $search = '';
     public $employee = '';
@@ -47,67 +47,70 @@ class DeductionsController extends Component
 
 
 
-
-    public function approve($deductionId)
+    public function approveTrafic($deduction)
     {
-        if(isset($deduction['violation_number'])){
-            Deductions::create([
-                "user_id"=>$deduction["user_id"],
-                "type"=>1 ,
-                 "amount"=>$deduction["amount"],
-                 "date"=>$deduction["date"],
-                 "detail"=>$deduction["violation_reason"],
-                 "status"=>1,
-            ]);
-            $deduction = TrafficViolations::findOrFail($deduction["id"]);
-            $deduction->status = 1;
-            $deduction->save();
-        }
-        else {
-            $deduction = Deductions::findOrFail($deductionId);
-            $deduction->status = 1;
-            $deduction->save();
-        }
-
+        Deductions::create([
+            "user_id" => $deduction['user_id'],
+            "type" => 1,
+            "amount" => $deduction['amount'],
+            "date" => $deduction['date'],
+            "detail" => $deduction['violation_reason'],
+            "status" => 1,
+        ]);
+        $deduction = TrafficViolations::find($deduction["id"]);
+        $deduction->status = 1;
+        $deduction->save();
+    }
+    public function approve($deductionId, $i)
+    {
+        $deduction = Deductions::findOrFail($deductionId);
+        $deduction->status = 1;
+        $deduction->save();
     }
 
     public function render()
     {
         $users = User::all()->where('status', '=', 1);
 
+        $violations = TrafficViolations::where("status", 0)->get();
+
+
         $deductions = Deductions::leftJoin("users", function ($join) {
             $join->on("users.id", "=", "deductions.user_id")
-            ->leftJoin("department","department.id","=","users.department_id");
+                ->leftJoin("department", "department.id", "=", "users.department_id");
         })
-        ->where('users.name','LIKE','%'.$this->search.'%')
-        ->orderBy("deductions.date", "desc")
-        ->select('deductions.*', 'users.name', 'users.department_id', 'users.company_id', 'department.name as department')
-        ->paginate(50);
-            $types = deduction_allowances_types::where("type",0)->get();
-            return view('livewire.deductions.deductions', compact('deductions',"types","users"));
+            ->where('users.name', 'LIKE', '%' . $this->search . '%')
+            ->orderBy("deductions.date", "desc")
+            ->select('deductions.*', 'users.name', 'users.department_id', 'users.company_id', 'department.name as department')
+            ->paginate(50);
+        $types = deduction_allowances_types::where("type", 0)->get();
+        return view('livewire.deductions.deductions', compact('deductions', "types", "users", "violations"));
     }
-    public function addDeduction(){
+    public function addDeduction()
+    {
         $err = $this->validate();
         Deductions::create([
-            "user_id"=>$this->userId ,
-             "amount"=>$this->amount ,
-             "date"=>$this->date  ,
-             "type"=>$this->type  ,
+            "user_id" => $this->userId,
+            "amount" => $this->amount,
+            "date" => $this->date,
+            "type" => $this->type,
         ]);
         return redirect("deductions");
     }
-    public function addTypeDeduction(){
+    public function addTypeDeduction()
+    {
         $this->rules = [
-            'typeDeduction'=>"required|string|min:3|max:255|unique:deduction_allowances_types,name",
+            'typeDeduction' => "required|string|min:3|max:255|unique:deduction_allowances_types,name",
         ];
         $this->validate();
         deduction_allowances_types::create([
-            'type'=>false,
-            "name"=>$this->typeDeduction,
+            'type' => false,
+            "name" => $this->typeDeduction,
         ]);
         return redirect()->route("deductions");
     }
-    public function delete($id){
+    public function delete($id)
+    {
         Deductions::destroy($id);
         return redirect()->route("deductions");
     }
