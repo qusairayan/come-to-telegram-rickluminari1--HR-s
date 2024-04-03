@@ -123,7 +123,63 @@
             <tbody>
 
 
+                @foreach ($violations as $violation)
+                <tr>
+                    <td>
+                        <a href="#" class="d-flex align-items-center">
 
+                            <div class="d-block">
+                                <span class="fw-bold">{{ $violation->name }}</span>
+                            </div>
+                        </a>
+                    </td>
+                    <td class="border-0 fw-bold">
+                        <span class="fw-normal">
+                            Driver
+                        </span>
+                    </td>
+                    <td class="border-0 fw-bold">
+                        <span class="fw-normal">
+                            مخالفات السير
+                        </span>
+                    </td>
+                    <td class="border-0 fw-bold">
+                        <span class="fw-normal">
+                            {{ $violation->date }}
+                        </span>
+                    </td>
+                    <td class="border-0 fw-bold">
+                        <span class="fw-normal">
+                            {{ $violation->amount }}
+                        </span>
+                    </td>
+                    <td class="border-0 fw-bold">
+                        @if ($violation->status == 0)
+                            <div class="btn-group">
+                                <button class="btn btn-success" data-bs-toggle="modal"
+                                    wire:click="approveTrafic({{ $violation }})" type="button">Approve</button>
+                            </div>
+                        @else
+                            <span class="badge text-white bg-success">Approved</span>
+                        @endif
+
+                    </td>
+
+                    <td class="border-0 fw-bold">
+                        @if ($deduction->status == 0)
+                            <div class="btn-group">
+                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                    wire:click="delete({{ $violation->id }})" type="button">Delete</button>
+                            </div>
+                        @else
+                            <span wire:click="delete({{ $violation->id }})" type="button"
+                                class="badge text-white bg-danger">delete</span>
+                        @endif
+                    </td>
+
+
+                </tr>
+            @endforeach
                 @foreach ($deductions as $deduction)
                     <tr>
                         <td>
@@ -178,64 +234,6 @@
                                 </div>
                             @else
                                 <span wire:click="delete({{ $deduction->id }})" type="button"
-                                    class="badge text-white bg-danger">delete</span>
-                            @endif
-                        </td>
-
-
-                    </tr>
-                @endforeach
-
-                @foreach ($violations as $violation)
-                    <tr>
-                        <td>
-                            <a href="#" class="d-flex align-items-center">
-
-                                <div class="d-block">
-                                    <span class="fw-bold">{{ $violation->name }}</span>
-                                </div>
-                            </a>
-                        </td>
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                Driver
-                            </span>
-                        </td>
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                مخالفات السير
-                            </span>
-                        </td>
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $violation->date }}
-                            </span>
-                        </td>
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $violation->amount }}
-                            </span>
-                        </td>
-                        <td class="border-0 fw-bold">
-                            @if ($violation->status == 0)
-                                <div class="btn-group">
-                                    <button class="btn btn-success" data-bs-toggle="modal"
-                                        wire:click="approveTrafic({{ $violation }})" type="button">Approve</button>
-                                </div>
-                            @else
-                                <span class="badge text-white bg-success">Approved</span>
-                            @endif
-
-                        </td>
-
-                        <td class="border-0 fw-bold">
-                            @if ($deduction->status == 0)
-                                <div class="btn-group">
-                                    <button class="btn btn-danger" data-bs-toggle="modal"
-                                        wire:click="delete({{ $violation->id }})" type="button">Delete</button>
-                                </div>
-                            @else
-                                <span wire:click="delete({{ $violation->id }})" type="button"
                                     class="badge text-white bg-danger">delete</span>
                             @endif
                         </td>
