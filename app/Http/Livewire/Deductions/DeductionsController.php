@@ -51,7 +51,7 @@ class DeductionsController extends Component
     {
         Deductions::create([
             "user_id" => $deduction['user_id'],
-            "type" => 1,
+            "type" => "مخالفات السير",
             "amount" => $deduction['amount'],
             "date" => $deduction['date'],
             "detail" => $deduction['violation_reason'],
