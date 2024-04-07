@@ -130,17 +130,12 @@
             <td style="text-align: center;padding-top: 8px; width: 10%">{{ abs($preBalance) }}</td>
             <td style="text-align: center;padding-top: 8px; width: 10%; ">PRE Balance</td>
         </tr>
-
-
-
-
-
         @php($totalDebit =0)
         @php($total =0)
         @php($totalCredit =0)
         @foreach ($arr as $key => $row)
         @if(getType($row) == "array")
-        @php($total += $row["salary"]+$preBalance)
+        @php($total += $row["salary"]+abs($preBalance))
         @php($totalDebit +=$row["salary"])
             <tr>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $row['month'] }}</td>
@@ -163,23 +158,6 @@
             </tr>
         @endif
  @endforeach
-        {{--        @php($totalCredit =0)
-        @foreach ($check as $key => $row)
-        @php($totalCredit += $row->Value)
-        @php($total -= $row->Value)
-            <tr>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $row->Date }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{$row->Payment_Method}}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%"></td>
-                <td style="text-align: center;padding-top: 8px; width: 10%"> {{ $row->Value }} </td>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $total }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; ">{{$row->check_details}}</td>
-            </tr>
-        @endforeach --}}
-
-
-
-
         <tr>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%" colspan="2">Total:</th>                
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%"> {{ $totalDebit }} </th>
