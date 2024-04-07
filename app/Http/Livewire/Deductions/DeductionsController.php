@@ -61,7 +61,7 @@ class DeductionsController extends Component
         $deduction->status = 1;
         $deduction->save();
     }
-    public function approve($deductionId, $i)
+    public function approve($deductionId)
     {
         $deduction = Deductions::findOrFail($deductionId);
         $deduction->status = 1;
