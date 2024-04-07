@@ -191,7 +191,6 @@ class SlipReportpdf extends Component
                 ->select("Payment_Method", "Value", "Date", "check_details")
                 ->get()->toArray();
         } else {
-
             $from = substr($from, 0, 7);
             $from = $from . "-30";
             $checks = DB::connection('LYONDB')
@@ -201,6 +200,7 @@ class SlipReportpdf extends Component
                 ->orWhere('NAME_TO', 'like', "%-" . $this->user["name"] . '-%')->select("*", "Date as month")
                 ->get()->toArray();
         }
+        var_dump($checks);die;
         return $checks;
     }
     private function getDeductions(string $from, $to = NULL)
