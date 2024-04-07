@@ -226,9 +226,7 @@ class SlipReportpdf extends Component
             ->where("Date", "<=", $from)
             ->where('NAME_TO', $this->user["name"])
             ->orWhere('NAME_TO', 'like', "%-" . $this->user["name"] . '-%')
-            ->whereBetween('Date', [$this->user["start_date"], $from])->get();
-            // ->sum("Value");
-            dd($sum);
+            ->whereBetween('Date', [$this->user["start_date"], $from])->sum("Value");
         $start_date = Carbon::parse($from);
         $current_date = $start_date->copy();
         $current_date->subDay();
