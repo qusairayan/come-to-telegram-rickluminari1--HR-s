@@ -127,7 +127,7 @@
             <td style="text-align: center;padding-top: 8px; width: 10%">-</td>
             <td style="text-align: center;padding-top: 8px; width: 10%">-</td>
             <td style="text-align: center;padding-top: 8px; width: 10%">-</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $preBalance }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%">{{ abs($preBalance) }}</td>
             <td style="text-align: center;padding-top: 8px; width: 10%; ">PRE Balance</td>
         </tr>
 

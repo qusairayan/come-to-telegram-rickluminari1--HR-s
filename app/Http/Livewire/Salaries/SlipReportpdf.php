@@ -234,7 +234,7 @@ class SlipReportpdf extends Component
         $current_date = $start_date->copy();
         $current_date->subDay();
         $sum -= MonthlyPayroll::where("user_id", $this->user["id"])->whereBetween("month", [$this->user["start_date"], $current_date])->sum("salary");
-        $sum = abs($sum);
+        // $sum = abs($sum);
         return $sum;
     }
     private function calcSalary($from, $to)
