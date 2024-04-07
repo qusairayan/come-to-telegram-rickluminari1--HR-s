@@ -109,7 +109,7 @@ class SlipReportpdf extends Component
         ->orderBy("Date")
         ->select("Payment_Method", "Value", "Date as month", "check_details")
         ->get()->toArray();
-        // dd($check);
+        dd($check);
         $preBalance = $this->PreBalance($from . "-01");
         $salaries = $this->calcSalary($from . "-01", $to . "-01");
         $arr = array_merge($salaries, $check);
@@ -168,7 +168,7 @@ class SlipReportpdf extends Component
                 $this->user['image'] = 'lyontravell.png';
                 break;
             case 'Lyon Rental Car':
-                $this->user['checkComp'] = 'check_lyon';
+                $this->user['checkComp'] = 'check_lyon_rental';
                 $this->user['image'] = 'lyonrental.png';
                 break;
             default:
@@ -201,7 +201,6 @@ class SlipReportpdf extends Component
         } else {
             $from = substr($from, 0, 7);
             $from = $from . "-30";
-            dd($from);
             $checks = DB::connection('LYONDB')
                 ->table($this->user["checkComp"])
                 ->where("Date", ">=", $from)
