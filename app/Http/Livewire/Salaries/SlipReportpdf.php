@@ -48,7 +48,7 @@ class SlipReportpdf extends Component
             $this->user["department"] = Department::where("id", $promotion->department_id)->pluck("name")->first();
         }
         $this->IdentifyCompany();
-        $deduction = Deductions::where("date", "LIKE", $date . "-%")->where("user_id", $id)->where("status",1)->get()->toArray();
+        $deduction = Deductions::where("date", "LIKE", $date . "-%")->where("user_id", $id)->where("status", 1)->get()->toArray();
         $userSalary = $this->user["salary"];
         $user = User::where("id", $this->user)->select("salary", "start_date", "unemployment_date")->get()->toArray();
         if ($user[0]["unemployment_date"]) $unemployment = Carbon::parse($user[0]["unemployment_date"]);
@@ -79,7 +79,7 @@ class SlipReportpdf extends Component
         }
         $names = array_column($deduction, "type");
         $deductionTypes = deduction_allowances_types::where("type", 0)->whereNotIn("name", $names)->get()->toArray();
-        $allownce = Allownce::where("date", "LIKE", $date . "-%")->where("user_id", $id)->where("status",1)->get()->toArray();
+        $allownce = Allownce::where("date", "LIKE", $date . "-%")->where("user_id", $id)->where("status", 1)->get()->toArray();
         $names = array_column($allownce, "type");
         $allownceTypes = deduction_allowances_types::where("type", 1)->whereNotIn("name", $names)->get()->toArray();
         $checks = DB::connection('LYONDB')
@@ -96,13 +96,21 @@ class SlipReportpdf extends Component
         // $this->user["salary"] = $monthly_payroll ?? $promotion ?? $this->user["salary"];
         $social = SocialSecurity::where("date", "Like", date($date) . "-%")->where("user_id", $id)->pluck("onEmployee")->first();
         $this->user["SocialSecurity"] = $social;
-        $this->runPdf('livewire.salaries.SlipReport', ["userSalary"=>$userSalary, "monthly_payroll" => $monthly_payroll, "social" => $social, "user" => $this->user, "allownce" => $allownce, "deduction" => $deduction, 'checks' => $checks, 'date' => $date, "deductionTypes" => $deductionTypes, "allownceTypes" => $allownceTypes]);
+        $this->runPdf('livewire.salaries.SlipReport', ["userSalary" => $userSalary, "monthly_payroll" => $monthly_payroll, "social" => $social, "user" => $this->user, "allownce" => $allownce, "deduction" => $deduction, 'checks' => $checks, 'date' => $date, "deductionTypes" => $deductionTypes, "allownceTypes" => $allownceTypes]);
     }
     public function FullTimegeneratePDF($id, $from, $to)
     {
         $this->getUser($id . null, $from, $to);
-        $check = $this->getChecks($from . "-01", $to . "-01");
-        $preBalance = $this->PreBalance($from . "-30");
+        $check = DB::connection('LYONDB')
+        ->table($this->user["checkComp"])
+        // ->where('NAME_TO', $this->user["name"])
+        ->orWhere('NAME_TO', 'like', '%' . $this->user["name"] . '%')
+        ->where("Date",">=", $from."-01")->where("Date","<=", $to."-01")
+        ->orderBy("Date")
+        ->select("Payment_Method", "Value", "Date as month", "check_details")
+        ->get()->toArray();
+        // dd($check);
+        $preBalance = $this->PreBalance($from . "-01");
         $salaries = $this->calcSalary($from . "-01", $to . "-01");
         $arr = array_merge($salaries, $check);
         $months = array_column($arr, 'month');
@@ -193,6 +201,7 @@ class SlipReportpdf extends Component
         } else {
             $from = substr($from, 0, 7);
             $from = $from . "-30";
+            dd($from);
             $checks = DB::connection('LYONDB')
                 ->table($this->user["checkComp"])
                 ->where("Date", ">=", $from)
@@ -204,13 +213,13 @@ class SlipReportpdf extends Component
     }
     private function getDeductions(string $from, $to = NULL)
     {
-        if (!$to) return Deductions::where('user_id', $this->user['id'])->where("status",1)->where("date", ">=", $from)->orderBy("date")->get()->toArray();
-        return Deductions::where('user_id', $this->user['id'])->where("status",1)->whereBetween("date", [$from, $to])->get()->toArray();
+        if (!$to) return Deductions::where('user_id', $this->user['id'])->where("status", 1)->where("date", ">=", $from)->orderBy("date")->get()->toArray();
+        return Deductions::where('user_id', $this->user['id'])->where("status", 1)->whereBetween("date", [$from, $to])->get()->toArray();
     }
     private function getAllownce(string $from, $to = NULL)
     {
-        if (!$to) return Allownce::where('user_id', $this->user['id'])->where("status",1)->where("date", ">=", $from)->orderBy("date")->get()->toArray();
-        return Allownce::where('user_id', '=', $this->user['id'])->where("status",1)->whereBetween("date", [$from, $to])->get()->toArray();
+        if (!$to) return Allownce::where('user_id', $this->user['id'])->where("status", 1)->where("date", ">=", $from)->orderBy("date")->get()->toArray();
+        return Allownce::where('user_id', '=', $this->user['id'])->where("status", 1)->whereBetween("date", [$from, $to])->get()->toArray();
     }
     private function PreBalance($from)
     {
@@ -219,8 +228,13 @@ class SlipReportpdf extends Component
             ->where("Date", "<=", $from)
             ->where('NAME_TO', $this->user["name"])
             ->orWhere('NAME_TO', 'like', "%-" . $this->user["name"] . '-%')
-            ->whereBetween('Date', [$this->user["start_date"], $from])->sum("Value");
-        $sum -= MonthlyPayroll::where("user_id", $this->user["id"])->whereBetween("month", [$this->user["start_date"], $from])->sum("salary");
+            ->whereBetween('Date', [$this->user["start_date"], $from])
+            ->sum("Value");
+        $start_date = Carbon::parse($from);
+        $current_date = $start_date->copy();
+        $current_date->subDay();
+        $sum -= MonthlyPayroll::where("user_id", $this->user["id"])->whereBetween("month", [$this->user["start_date"], $current_date])->sum("salary");
+        $sum = abs($sum);
         return $sum;
     }
     private function calcSalary($from, $to)

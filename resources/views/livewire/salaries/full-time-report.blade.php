@@ -154,7 +154,7 @@
         @php($totalCredit += $row->Value)
         @php($total -= $row->Value)
             <tr>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $row->Date }}</td>
+                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $row->month }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{$row->Payment_Method}}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">0</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%"> {{ $row->Value }} </td>
