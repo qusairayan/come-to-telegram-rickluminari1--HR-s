@@ -131,11 +131,11 @@
             <td style="text-align: center;padding-top: 8px; width: 10%; ">PRE Balance</td>
         </tr>
         @php($totalDebit =0)
-        @php($total =0)
+        @php($total =abs($preBalance))
         @php($totalCredit =0)
         @foreach ($arr as $key => $row)
         @if(getType($row) == "array")
-        @php($total += $row["salary"]+abs($preBalance))
+        @php($total += $row["salary"])
         @php($totalDebit +=$row["salary"])
             <tr>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $row['month'] }}</td>
