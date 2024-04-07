@@ -200,7 +200,6 @@ class SlipReportpdf extends Component
                 ->orWhere('NAME_TO', 'like', "%-" . $this->user["name"] . '-%')->select("*", "Date as month")
                 ->get()->toArray();
         }
-        var_dump($checks);die;
         return $checks;
     }
     private function getDeductions(string $from, $to = NULL)
