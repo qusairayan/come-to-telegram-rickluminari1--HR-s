@@ -228,11 +228,11 @@ class SlipReportpdf extends Component
             ->orWhere('NAME_TO', 'like', "%-" . $this->user["name"] . '-%')
             ->whereBetween('Date', [$this->user["start_date"], $from])
             ->sum("Value");
-            dd($sum);
         $start_date = Carbon::parse($from);
         $current_date = $start_date->copy();
         $current_date->subDay();
         $sum -= MonthlyPayroll::where("user_id", $this->user["id"])->whereBetween("month", [$this->user["start_date"], $current_date])->sum("salary");
+        dd($sum);
         return $sum;
     }
     private function calcSalary($from, $to)
