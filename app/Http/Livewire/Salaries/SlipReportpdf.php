@@ -109,7 +109,6 @@ class SlipReportpdf extends Component
         ->orderBy("Date")
         ->select("Payment_Method", "Value", "Date as month", "check_details")
         ->get()->toArray();
-        dd($check);
         $preBalance = $this->PreBalance($from . "-01");
         $salaries = $this->calcSalary($from . "-01", $to . "-01");
         $arr = array_merge($salaries, $check);
