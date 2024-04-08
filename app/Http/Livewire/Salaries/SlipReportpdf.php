@@ -84,7 +84,7 @@ class SlipReportpdf extends Component
         $allownceTypes = deduction_allowances_types::where("type", 1)->whereNotIn("name", $names)->get()->toArray();
         $checks = DB::connection('LYONDB')
             ->table($this->user["checkComp"])
-            ->where('NAME_TO', $this->user["name"])
+            ->where('employee_id', $this->user["id"])
             ->where("date", "LIKE", $date . "-%")
             ->select("Payment_Method", "Value", "Date", "check_details")
             ->get()->toArray();
@@ -102,13 +102,12 @@ class SlipReportpdf extends Component
     {
         $this->getUser($id . null, $from, $to);
         $check = DB::connection('LYONDB')
-        ->table($this->user["checkComp"])
-        // ->where('NAME_TO', $this->user["name"])
-        ->orWhere('NAME_TO', 'like', '%' . $this->user["name"] . '%')
-        ->where("Date",">=", $from."-01")->where("Date","<=", $to."-01")
-        ->orderBy("Date")
-        ->select("Payment_Method", "Value", "Date as month", "check_details")
-        ->get()->toArray();
+            ->table($this->user["checkComp"])
+            ->where("employee_id", $id)
+            ->where("Date", ">=", $from . "-01")->where("Date", "<=", $to . "-01")
+            ->orderBy("Date")
+            ->select("Payment_Method", "Value", "Date as month", "check_details")
+            ->get()->toArray();
         $preBalance = $this->PreBalance($from . "-01");
         $salaries = $this->calcSalary($from . "-01", $to . "-01");
         $arr = array_merge($salaries, $check);
@@ -221,16 +220,17 @@ class SlipReportpdf extends Component
     }
     private function PreBalance($from)
     {
-        $sum = DB::connection('LYONDB')
-            ->table($this->user["checkComp"])
-            ->where("Date", "<=", $from)
-            ->where('NAME_TO', $this->user["name"])
-            ->orWhere('NAME_TO', 'like', "%-" . $this->user["name"] . '-%')
-            ->whereBetween('Date', [$this->user["start_date"], $from])->sum("Value");
         $start_date = Carbon::parse($from);
         $current_date = $start_date->copy();
         $current_date->subDay();
-        $sum -= MonthlyPayroll::where("user_id", $this->user["id"])->whereBetween("month", [$this->user["start_date"], $current_date])->sum("salary");
+        $new_date = str_replace("16", "01", $this->user["start_date"]);
+        $sum = MonthlyPayroll::where("user_id", $this->user["id"])->whereBetween("month", [$new_date, $current_date])->sum("salary");
+        $sum -= DB::connection('LYONDB')
+            ->table($this->user["checkComp"])
+            ->where("Date", "<=", $from)
+            ->where('employee_id', $this->user["id"])
+            // ->orWhere('NAME_TO', 'like', "%-" . $this->user["name"] . '-%')
+            ->whereBetween('Date', [$this->user["start_date"], $from])->sum("Value");
         return $sum;
     }
     private function calcSalary($from, $to)
