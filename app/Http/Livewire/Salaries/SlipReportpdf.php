@@ -104,7 +104,7 @@ class SlipReportpdf extends Component
         $check = DB::connection('LYONDB')
             ->table($this->user["checkComp"])
             ->where("employee_id", $id)
-            ->where("Date", ">=", $from . "-01")->where("Date", "<=", $to . "-01")
+            ->where("Date", ">=", $from . "-01")->where("Date", "<=", $to . "-30")
             ->orderBy("Date")
             ->select("Payment_Method", "Value", "Date as month", "check_details")
             ->get()->toArray();

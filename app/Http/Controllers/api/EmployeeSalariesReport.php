@@ -34,7 +34,7 @@ class EmployeeSalariesReport extends Controller
                 $imageCompany = 'lyontravell.png';
                 break;
             case 'Lyon Rental Car':
-                $checkTable = 'check_lyon';
+                $checkTable = 'check_lyon_rental';
                 $imageCompany = 'lyonrental.png';
                 break;
             default:

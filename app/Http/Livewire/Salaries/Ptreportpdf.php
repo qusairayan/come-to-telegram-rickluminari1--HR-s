@@ -85,7 +85,10 @@ class Ptreportpdf extends Component
         $sum = PartTime::where('user_id', $this->user['id'])->where('from', "<", $from)->sum("amount");
         $sum += Allownce::where("user_id", $this->user['id'])->where('Date', "<", $from)->sum("amount");
         $sum -= Deductions::where("user_id", $this->user['id'])->where('Date', "<", $from)->sum("amount");
-        $sum -= DB::connection('LYONDB')->table($this->checkComp)->where('Name_To', 'LIKE', '%' . $this->user["name"] . '%')->where('Date', "<", $from)->sum("Value");
+        $sum -= DB::connection('LYONDB')->table($this->checkComp)
+        // ->where('Name_To', 'LIKE', '%' . $this->user["name"] . '%')
+        ->where("employee_id",$this->user["id"])
+        ->where('Date', "<", $from)->sum("Value");
         return $sum;
     }
     private function getDate($id, $from, $to)
@@ -123,7 +126,10 @@ class Ptreportpdf extends Component
         // get parttime
         $this->partTime = PartTime::where('user_id', $this->user['id'])->where('from', ">=", $from)->where("to", "<=", $to)->select("part_times.*", "from as date")->get()->toArray();
         $this->pending = PartTime::where('user_id', $this->user['id'])->where('from', ">=", $from)->where("status", 0)->select("part_times.*", "from as date")->get()->toArray();
-        $this->checks = DB::connection('LYONDB')->table($this->checkComp)->where('Name_To', 'LIKE', "%" . $this->user["name"] . "%")->whereBetween('Date', [$from, $to])->orderBy("date")->select("$this->checkComp.*", "Date as date")->get()->toArray();
+        $this->checks = DB::connection('LYONDB')->table($this->checkComp)
+        // ->where('Name_To', 'LIKE', "%" . $this->user["name"] . "%")
+        ->where('employee_id',$this->user['id'])
+        ->whereBetween('Date', [$from, $to])->orderBy("date")->select("$this->checkComp.*", "Date as date")->get()->toArray();
         $this->dedction = Deductions::where("user_id", $this->user['id'])->where("status",1)->whereBetween('Date', [$from, $to])->orderBy("date")->get()->toArray();
         $this->allownce = Allownce::where("user_id", $this->user['id'])->where("status",1)->whereBetween('Date', [$from, $to])->orderBy("date")->get()->toArray();
     }
