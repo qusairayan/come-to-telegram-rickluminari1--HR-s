@@ -223,14 +223,17 @@ class SlipReportpdf extends Component
         $start_date = Carbon::parse($from);
         $current_date = $start_date->copy();
         $current_date->subDay();
-        $new_date = str_replace("16", "01", $this->user["start_date"]);
+        // $new_date = str_replace("16", "01", $this->user["start_date"]);
+        $new_date = explode("-", $this->user["start_date"]);
+        $new_date[2] = "01";
+        $new_date = implode("-", $new_date);
         $sum = MonthlyPayroll::where("user_id", $this->user["id"])->whereBetween("month", [$new_date, $current_date])->sum("salary");
         $sum -= DB::connection('LYONDB')
             ->table($this->user["checkComp"])
             ->where("Date", "<=", $from)
             ->where('employee_id', $this->user["id"])
             // ->orWhere('NAME_TO', 'like', "%-" . $this->user["name"] . '-%')
-            ->whereBetween('Date', [$this->user["start_date"], $from])->sum("Value");
+            ->whereBetween('Date', [$new_date, $from])->sum("Value");
         return $sum;
     }
     private function calcSalary($from, $to)
