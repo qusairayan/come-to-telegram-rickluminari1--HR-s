@@ -1,4 +1,5 @@
 <div wire:ignore.self>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Edit Employee</title>
     <form wire:submit.prevent="save" action="#">
 
@@ -320,7 +321,7 @@
                     </div>
 
 
-
+                    
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -360,14 +361,27 @@
                             </div>
                         </div>
                         <div class="col-sm-9 mb-3">
-                            <div class="form-group">
+                            <div style="position: relative" class="form-group">
                                 <label for="password">Password</label>
                                 <input class="form-control" id="password" type="password"
                                     placeholder="Enter Employee's  password" wire:model="password">
+                                    <i id="pass1" onclick="hidepass()" style="position: absolute;right: 10px;top: 41px;display:none;cursor:pointer" class="fa-solid fa-eye"></i>
+                                    <i id="pass2" onclick="showpass()" style="position: absolute;right: 10px;top: 41px;cursor:pointer" class="fa-solid fa-eye-slash"></i>
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
+<script>
+    function showpass(){
+        $("#password").attr("type","text");
+        $("#pass1").show();
+        $("#pass2").hide();
+    }
+    function hidepass(){
+        $("#password").attr("type","password");
+        $("#pass1").hide();
+        $("#pass2").show();
+    }
+</script>
                             </div>
                         </div>
                         <div class="col-md-7 mb-3">
