@@ -54,6 +54,6 @@ class Promotions extends Component
     {
         $user_name = User::find($promotion->id)->name;
         $promotion->user_naem = $user_name;
-        return view('livewire.employees.editpromotion', ['promotion' => $promotion]);
+        return view('livewire.employees.edit-promotion', ['promotion' => $promotion]);
     }
 }

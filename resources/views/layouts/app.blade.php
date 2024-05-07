@@ -1,7 +1,5 @@
 
 <x-layouts.base>
-
-
     @if (in_array(request()->route()->getName(),
             [
                 'dashboard',
@@ -40,6 +38,7 @@
                 'upgrade-to-pro',
                 'promotions',
                 'promotions.add',
+                'promotion.edit',
                 'payrolls.socialsecurity',
                 'payrolls.slips',
                 'payrolls.newSalary',
@@ -54,7 +53,7 @@
                 'employee.banks',
                 'employee.VacationBalance',
                 "vacations.report",
-                "locations"
+                "locations",
             ]))
         {{-- Nav --}}
         @include('layouts.nav')

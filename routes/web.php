@@ -56,6 +56,7 @@ use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Employees\Banks;
+use App\Http\Livewire\Employees\EditPromotion;
 use App\Http\Livewire\Employees\VacationBalance;
 use App\Http\Livewire\ForgotPasswordExample;
 use App\Http\Livewire\Index;
@@ -126,8 +127,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/promotions', Promotions::class)->name('promotions'); //->middleware('permission:viewAllEmployees');
         Route::get('/promotions.add', AddPromotions::class)->name('promotions.add'); //->middleware('permission:viewAllEmployees');
-        Route::get('/promotions/{promotion}/edit', [PromotionEdit::class, 'render'])->name('promotions.edit'); //->middleware('permission:viewAllEmployees');
-
+        Route::get('/promotions/edit/{promotion}', [EditPromotion::class, 'render'])->name('promotion.edit'); //->middleware('permission:viewAllEmployees');
     });
 
 

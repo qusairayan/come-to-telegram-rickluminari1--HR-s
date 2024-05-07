@@ -2,16 +2,12 @@
 
 namespace App\Http\Livewire\Employees;
 
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Promotion;
-use App\Models\Company;
-use App\Models\Department;
-
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class PromotionEdit extends Component
+class EditPromotion extends Component
 {
     use WithPagination;
     public $search = '';

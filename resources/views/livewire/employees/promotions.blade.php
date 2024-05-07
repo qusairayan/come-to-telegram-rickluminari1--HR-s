@@ -205,7 +205,7 @@
                             <td class="border-0 fw-bold">
                             <div class="btn-group">
                                 <a class="dropdown-item"
-                                    href="{{ route('promotions.edit', ['promotion' => $promo->id]) }}"><span
+                                    href="{{ route('promotion.edit', ['promotion' => $promo->id]) }}"><span
                                         class="fas fa-edit me-2"></span>Edit</a>
                             </div>
                         </td>

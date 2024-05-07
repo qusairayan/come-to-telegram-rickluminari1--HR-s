@@ -18,8 +18,7 @@ class Attendences extends Component
 
     
     public function render()
-    { 
-
+    {
         if(auth()->user()->hasPermissionTo('viewAttendence')){
         $attendances = Attendence::leftJoin('users', 'users.id', '=', 'attendence.user_id')
             ->leftJoin('department', 'users.department_id', '=', 'department.id')
@@ -29,7 +28,6 @@ class Attendences extends Component
             return view('livewire.attendence.attendence', compact('attendances'));
 
         }
-
         else if(auth()->user()->hasPermissionTo('viewDepAttendence')){
             $attendances = Attendence::leftJoin('users', 'users.id', '=', 'attendence.user_id')
             ->leftJoin('department', 'users.department_id', '=', 'department.id')
