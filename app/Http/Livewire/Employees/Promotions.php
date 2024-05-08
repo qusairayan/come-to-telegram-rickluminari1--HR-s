@@ -50,10 +50,8 @@ class Promotions extends Component
         $promotions = $promotionsQuery->paginate(10);
         return view('livewire.employees.promotions', ['promotions' => $promotions, 'departments' => $departments, 'companies' => $companies, 'users' => $users]);
     }
-    public function edit(Promotion $promotion)
+    public function delete($id)
     {
-        $user_name = User::find($promotion->id)->name;
-        $promotion->user_naem = $user_name;
-        return view('livewire.employees.edit-promotion', ['promotion' => $promotion]);
+        Promotion::destroy($id);
     }
 }

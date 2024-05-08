@@ -1,6 +1,11 @@
 <div>
 
-
+    <style>
+        .card .table td,
+        .card .table th {
+            font-size: 13px;
+        }
+    </style>
     <title>Promotions </title>
 
 
@@ -161,6 +166,8 @@
                     <th class="border-gray-200">Salary</th>
                     <th class="border-gray-200">Date</th>
                     <th class="border-gray-200">Action</th>
+                    <th class="border-gray-200">Action</th>
+                    <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -203,12 +210,54 @@
                                 @endif
                             </td>
                             <td class="border-0 fw-bold">
-                            <div class="btn-group">
-                                <a class="dropdown-item"
-                                    href="{{ route('promotion.edit', ['promotion' => $promo->id]) }}"><span
-                                        class="fas fa-edit me-2"></span>Edit</a>
-                            </div>
-                        </td>
+                                <div class="btn-group">
+                                        <a class="btn btn-primary"
+                                            href="{{ url('employees/promotions/show', ['id' => $promo->id]) }}"
+                                            target="_blank">Show</a>
+                                </div>
+                            </td>
+                            <td class="border-0 fw-bold">
+                                <div class="btn-group">
+                                    @if (!$promo->to)
+                                        <a class="btn btn-success"
+                                            href="{{ url('employees/promotions/edit', ['id' => $promo->id]) }}"
+                                            target="_blank">Edit</a>
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="border-0 fw-bold">
+                                <div class="btn-group">
+                                    @if (!$promo->to)
+                                        <button class="btn btn-danger"
+                                            onclick="confirm({{ $promo->id }})">Delete</button>
+                                        <button class="btn btn-danger confirm{{ $promo->id }} d-none"
+                                            wire:click="delete({{ $promo->id }})">Delete</button>
+                                    @endif
+                                    <script>
+                                        function confirm(id) {
+                                            Swal.fire({
+                                                title: "Are you sure?",
+                                                text: "You won't be able to revert this!",
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Yes, delete it!"
+                                            }).then((result) => {
+                                                console.log(result);
+                                                if (result.isConfirmed) {
+                                                    $(`.confirm${id}`).trigger("click");
+                                                    Swal.fire({
+                                                        title: "Deleted!",
+                                                        text: "Your file has been deleted.",
+                                                        icon: "success",
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    </script>
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
             </tbody>
