@@ -176,7 +176,7 @@ class SetSchedule extends Component
     {
         $companies = Company::all();
         $departments = Department::all();
-        $users = User::all();
+        $users = User::where("status",1)->get();
         return view('livewire.schedule.setSchedule', compact('users', 'departments', 'companies'));
     }
     public function save()
@@ -197,5 +197,6 @@ class SetSchedule extends Component
             ]);
             $current_date->addDay(); // Move to the next day
         }
+        return redirect()->route("schedule");
     }
 }

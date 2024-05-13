@@ -118,6 +118,7 @@
                                         ? '<span class="fw-bold text-warning">Pending</span>'
                                         : '<span class="fw-bold text-danger">Rejected</span>') !!}
                             </span></td>
+                            @if($vacation->status == 0)
                         <td class="border-0 fw-bold">
                             <div class="btn-group">
                                 <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0"
@@ -142,6 +143,8 @@
                                 </div>
                             </div>
                         </td>
+                        @else <td>--</td>
+                        @endif
                     </tr>
                 @endforeach
                 <button class="dedc" style="display: none" wire:click="click({{$vacation ?? "" }})">click</button>
