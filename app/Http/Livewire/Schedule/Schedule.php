@@ -5,11 +5,8 @@ namespace App\Http\Livewire\Schedule;
 use App\Models\User;
 use App\Models\Department;
 use App\Models\Schedules;
-use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Spatie\Permission\Models\Permission;
-use Illuminate\Http\Request;
 
 class Schedule extends Component
 {

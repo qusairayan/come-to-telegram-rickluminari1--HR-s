@@ -1,4 +1,5 @@
 <main>
+    <title>Create Employee</title>
     <style>
         .container {
           display: block;
@@ -12,7 +13,6 @@
           -ms-user-select: none;
           user-select: none;
         }
-        
         .container input {
           position: absolute;
           opacity: 0;
@@ -20,7 +20,6 @@
           height: 0;
           width: 0;
         }
-        
         .checkmark {
           position: absolute;
           top: 0;
@@ -32,21 +31,17 @@
         .container:hover input ~ .checkmark {
           background-color: #ccc;
         }
-        
         .container input:checked ~ .checkmark {
           background-color: #2196F3;
         }
-        
         .checkmark:after {
           content: "";
           position: absolute;
           display: none;
         }
-        
         .container input:checked ~ .checkmark:after {
           display: block;
         }
-        
         .container .checkmark:after {
           left: 9px;
           top: 5px;
@@ -60,20 +55,14 @@
         }
         </style>
     <form wire:submit.prevent="add" action="#" method="POST">
-
-
-
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-
             <h1>Add New Employee</h1>
         </div>
-
         <div class="row">
             <div class="col-12 col-xl-8">
                 <div class="card card-body border-0 shadow mb-4">
                     <h2 class="h5 mb-4">General information</h2>
                     <div class="row">
-
                         <div class="col-md-6 mb-3">
                             <div>
                                 <label for="name">Name</label>
@@ -94,10 +83,7 @@
                                 @enderror
                             </div>
                         </div>
-
                     </div>
-
-
                     <div class="row">
                         <div class="col-md-5 mb-3">
                             <div>
@@ -106,156 +92,96 @@
                                     wire:model="company" autofocus required>
                                     <option value=""  selected >Select Employee's Company
                                     </option>
-
                                     @foreach ($companies as $comp)
                                         <option value="{{ $comp->id }}">
                                             {{ $comp->name }} </option>
                                     @endforeach
-                                   
-
                                 </select>
                                 @error('company')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
                         <div class="col-md-5 mb-3">
                             <div>
                                 <label for="department">Department</label>
                                 <select class="form-select mb-0" id="department" aria-label="department select example"
                                     wire:model="department" autofocus required>
-                                    
                                     <option value="" selected >Select Employee's Department
                                     </option>@foreach ($departments as $dept)
-
                                         <option value="{{ $dept->id }}">
                                             {{ $dept->name }} - {{ $dept->company_name }}</option>
                                     @endforeach
-                                  
-
                                 </select>
                                 @error('department')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
-
                         <div class="col-md-5 mb-3">
                             <label for="position">Position</label>
                             <div class="input-group">
-
-
                                 <select class="form-select mb-0" id="position" aria-label="position select example"
                                     wire:model="position" autofocus required>
                                     <option value="" disabled selected hidden>Select Employee's Postion
-
                                     <option value="employee">Employee</option>
                                     <option value="manager">Manager</option>
-
-
-
                                 </select>
-
-
                                 @error('position')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
-
-
                         <div class="col-md-5 mb-3">
                             <label for="position">Employee Type</label>
                             <div class="input-group">
-
-
                                 <select class="form-select mb-0" id="type" aria-label="type select example"
                                     wire:model="type" autofocus required>
                                     <option value="" disabled selected hidden>Select Employee's Type
-
                                     <option value="full-time">Full-time</option>
                                     <option value="part-time">Part-time</option>
-
                                 </select>
-
-
                                 @error('type')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
-
-
                         @if ($this->type == 'part-time')
                             <div class="col-md-5 mb-3">
                                 <label for="position">Part Time Period</label>
                                 <div class="input-group">
-
-
                                     <select class="form-select mb-0" id="part_time"
                                         aria-label="part_time select example" wire:model="part_time" autofocus required>
                                         <option value=""  selected >Select Employee's part time period</option>
-
                                         <option value="daily">Daily</option>
                                         <option value="weekly">Weekly</option>
                                         <option value="monthly">Monthly</option>
-
                                     </select>
-
-
                                     @error('part_time')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-
                                 </div>
                             </div>
                         @endif
-
-
-
-
                         <div class="col-md-5 mb-3">
                             <label for="role">Role</label>
                             <div class="input-group">
-
-
                                 <select class="form-select mb-0" id="role" aria-label="role select example"
                                     wire:model="role" autofocus required>
-                                    
                                     <option value="" selected>Select Employee's Role
                                     </option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->name }}">
                                             {{ $role->name }} </option>
                                     @endforeach
-                                    
-
                                 </select>
-
-
                                 @error('role')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
-
-
-
                     </div>
-
-
                     <div class="row align-items-center">
-
                         <div class="col-md-6 mb-3">
                             <label for="ID_no" autofocus required>ID Number</label>
                             <div class="input-group">
@@ -265,22 +191,16 @@
                                 @error('ID_no')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
-
-
                         <div class="col-md-6 mb-3">
                             <label for="birth" autofocus required>Birthday</label>
                             <div class="input-group">
-
                                 <input class="form-control datepicker-input" type="date" id="birth"
                                     wire:model="birth">
                                 @error('birth')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
                         <div class="col-md-5 mb-3">
@@ -295,44 +215,34 @@
                             @error('gender')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-
                         </div>
                         <div class="col-md-5 mb-3">
                             <label for="start_date">Start Date</label>
                             <div class="input-group">
-
                                 <input class="form-control datepicker-input" type="date" id="start_date"
                                     placeholder="Enter Employee's start_date" wire:model="start_date" autofocus
                                     required>
                                 @error('start_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
                     </div>
-
-
                     <div class="row">
                         <h2 class="h5 my-4">Salar information</h2>
-
                         <div class="col-md-6 mb-3">
                             <label for="salary">Salary @if($this->part_time) -  {{$this->part_time}} @endif</label>
                             <div class="input-group">
-
                                 <input class="form-control datepicker-input" type="text" id="salary"
                                     placeholder="Enter Employee's salary" wire:model="salary" autofocus required>
                                 @error('salary')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
                         <div class="col-md-6 mb-3">
                             <label for="bank">Bank</label>
                             <div class="input-group">
-
                                 <select class="form-select mb-0" id="bank" aaria-label="bank select example"
                                     wire:model="bank" autofocus required>
                                     <option value="" selected >Select Bank</option>
@@ -344,29 +254,19 @@
                                 @error('bank')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
                         <div class="col-md-6 mb-3">
                             <label for="IBAN">IBAN</label>
                             <div class="input-group">
-
                                 <input class="form-control datepicker-input" type="text" id="IBAN"
                                     placeholder="Enter Employee's IBAN" wire:model="IBAN" autofocus required>
                                 @error('IBAN')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
-
-
-
                     </div>
-
-
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
@@ -376,7 +276,6 @@
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -401,7 +300,6 @@
                                 @error('address')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
                         <div class="col-md-7 mb-3">
@@ -414,8 +312,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <h2 class="h5 my-4">Password</h2>
                     <div class="row">
                         <div class="col-sm-9 mb-3">
@@ -429,7 +325,6 @@
 
                             </div>
                         </div>
-
                         <div class="col-sm-9 mb-3">
                             <div class="form-group">
                                 <label for="passwordConfirmation"> Password Confirmation</label>
@@ -439,57 +334,37 @@
                                 @error('passwordConfirmation')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
                         </div>
-
-
                     </div>
-
-
-
                     <div class="mt-3">
                         <button type="submit" class="btn btn-gray-800 mt-2 animate-up-2"
                             wire:loading.attr="disabled">Save All</button>
                     </div>
-
                 </div>
-
             </div>
-
-
-
             <div class="col-12 col-xl-4">
                 <div class="row ">
                     <div class="col-12 mb-4">
                         <div class="align-items-center card shadow border-0 text-center p-0">
-
                             <div class="card-body pb-5">
                                 <h4 class="h3">{{ $this->name }}</h4>
                                 <h5 class="fw-normal">{{ $this->departmentName . ' - ' . $this->position }}</h5>
-
                             </div>
-
                             <div class="col-sm-10 mb-3 ">
                                 <label for="formFile" class="form-label">upload Employee's image</label>
                                 <input class="form-control" type="file" id="image" wire:model="image">
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
-                            <!-- End of Form -->
                         </div>
                     </div>
-
-
-
                     <div class="col-12 mb-4">
                         <div class="align-items-center card shadow border-0 text-center p-0">
 
                             <div class="card-body pb-5">
                                 <h4 class="h3">Upload conrtacts copy</h4>
-
                             </div>
                             <div class="col-sm-10 mb-3 ">
                                 <label for="formFile" class="form-label">upload contract's copy</label>
@@ -518,25 +393,10 @@
                                     @error('sign_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-
                                 </div>
                             </div>
-
-
-                            <!-- End of Form -->
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
                     <div class="col-12 mb-3">
                         <div class="align-items-center card shadow border-0 text-center p-0">
 
@@ -552,19 +412,13 @@
                                 @enderror
 
                             </div>
-                            <!-- End of Form -->
                         </div>
                     </div>
-
-
-
-
                     <div class="col-12 mb-3">
                         <div class="align-items-center card shadow border-0 text-center p-0">
 
                             <div class="card-body pb-5">
                                 <h4 class="h3">Employee's License image</h4>
-
                             </div>
                             <div class="col-sm-10 mb-3 ">
                                 <label for="formFile" class="form-label">upload Employee's License image</label>
@@ -573,13 +427,9 @@
                                 @error('ID_image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-
                             </div>
-                            <!-- End of Form -->
                         </div>
                     </div>
-
-
                     <div class="col-12 mb-3">
                         <div class="card card-body border-0 shadow mb-4 mb-xl-0">
                             <h2 class="h5 mb-4">Activities</h2>
@@ -616,10 +466,6 @@
                             </ul>
                         </div>
                     </div>
-
-
-
-
                 </div>
             </div>
             @if ($showSavedAlert)
@@ -627,7 +473,6 @@
                     Saved!
                 </div>
             @endif
-
             @if ($showDemoNotification)
                 <div class="alert alert-info mt-2" role="alert">
                     You cannot do that in the demo version.

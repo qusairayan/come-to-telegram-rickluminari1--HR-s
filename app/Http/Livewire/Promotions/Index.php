@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\Employees;
+namespace App\Http\Livewire\Promotions;
 
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Promotion;
 use App\Models\Company;
@@ -10,7 +9,7 @@ use App\Models\Department;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Promotions extends Component
+class Index extends Component
 {
     use WithPagination;
     public $search = '';
@@ -48,7 +47,7 @@ class Promotions extends Component
         $promotionsQuery->where('users.name', 'LIKE', '%' . $this->search . '%');
         $promotionsQuery->orderBy('from', 'desc');
         $promotions = $promotionsQuery->paginate(10);
-        return view('livewire.employees.promotions', ['promotions' => $promotions, 'departments' => $departments, 'companies' => $companies, 'users' => $users]);
+        return view('livewire.Promotions.Index', ['promotions' => $promotions, 'departments' => $departments, 'companies' => $companies, 'users' => $users]);
     }
     public function delete($id)
     {

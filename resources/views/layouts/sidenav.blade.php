@@ -91,21 +91,21 @@
 
 
                             <li
-                                class="nav-item {{ Route::currentRouteName() == 'promotions' || Route::currentRouteName() == 'promotions.add' ? 'active' : '' }}">
-                                <a href="/employees/promotions" class="nav-link">
+                                class="nav-item {{ Route::currentRouteName() == 'promotions.index' || Route::currentRouteName() == 'promotions.create' ? 'active' : '' }}">
+                                <a href="/promotions" class="nav-link">
                                     <span class="sidebar-text">Promtions</span>
                                 </a>
                             </li>
 
                             <li
                                 class="nav-item {{ Route::currentRouteName() == 'employee.banks' || Route::currentRouteName() == 'employee.banks' ? 'active' : '' }}">
-                                <a href="/employees/banks" class="nav-link">
-                                    <span class="sidebar-text">Add Bank</span>
+                                <a href="/banks" class="nav-link">
+                                    <span class="sidebar-text">Banks</span>
                                 </a>
                             </li>
                             <li
                                 class="nav-item {{ Route::currentRouteName() == 'employee.VacationBalance' || Route::currentRouteName() == 'employee.socialSecurety' ? 'active' : '' }}">
-                                <a href="/employees/vacation-balance" class="nav-link">
+                                <a href="/vacation-balance" class="nav-link">
                                     <span class="sidebar-text">Vacation Balance</span>
                                 </a>
                             </li>
@@ -159,7 +159,7 @@
 
                         {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
                         <li class="nav-item {{ Route::currentRouteName() == 'employees.lateness' ? 'active' : '' }}">
-                            <a href="/employees/lateness" class="nav-link">
+                            <a href="/attendence/lateness" class="nav-link">
                                 <span class="sidebar-text">Lateness</span>
                             </a>
                         </li>
@@ -169,7 +169,7 @@
 
                         {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
                         <li class="nav-item {{ Route::currentRouteName() == 'employees.overtime' ? 'active' : '' }}">
-                            <a href="/employees/overtime" class="nav-link">
+                            <a href="/attendence/overtime" class="nav-link">
                                 <span class="sidebar-text">Overtime</span>
                             </a>
                         </li>

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Employees;
+namespace App\Http\Livewire\Promotions;
 
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Promotion;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class EditPromotion extends Component
+class Edit extends Component
 {
     public $company = '';
     public $department = '';
@@ -43,7 +41,7 @@ class EditPromotion extends Component
     {
         $companies = Company::get();
         $departments = Department::get();
-        return view('livewire.employees.edit-promotion', ["companies"=>$companies,"departments"=>$departments]);
+        return view('livewire.Promotions.Edit', ["companies"=>$companies,"departments"=>$departments]);
     }
     public function update()
     {

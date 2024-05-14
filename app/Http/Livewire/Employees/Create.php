@@ -12,12 +12,11 @@ use App\Models\Role;
 use App\Models\Company;
 use App\Models\EmployeesContract;
 use App\Models\Salary;
-use GuzzleHttp\Promise\Create;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 
-class AddNewEmployee extends Component
+class Create extends Component
 {
     use WithFileUploads;
     public $user;
@@ -32,9 +31,9 @@ class AddNewEmployee extends Component
     public $birth = '';
     public $address = '';
     public $Duration_contract = "";
-    public $social_security =false;
+    public $social_security = false;
     public $contract;
-    public $sign_date="";
+    public $sign_date = "";
     public $image;
     public $ID_image;
     public $license_image;
@@ -69,8 +68,8 @@ class AddNewEmployee extends Component
         'image' => 'nullable|mimes:jpg,png,jpeg',
         'ID_image' => 'nullable|mimes:jpg,png,jpeg',
         'license_image' => 'nullable|mimes:jpg,png,jpeg',
-        "Duration_contract"=>'required|boolean',
-        "social_security"=>'required|boolean',
+        "Duration_contract" => 'required|boolean',
+        "social_security" => 'required|boolean',
     ];
     public function updatedUsername()
     {
@@ -84,7 +83,8 @@ class AddNewEmployee extends Component
     {
         // $this->validateOnly($propertyName);
     }
-    public function add(){
+    public function add()
+    {
         $this->validate([
             'password' => 'required|same:passwordConfirmation|min:6',
             'username' => ['required', 'unique:users', 'max:255'],
@@ -103,22 +103,21 @@ class AddNewEmployee extends Component
             'image' => 'nullable|mimes:jpg,png,jpeg',
             'ID_image' => 'nullable|mimes:jpg,png,jpeg',
             'license_image' => 'nullable|mimes:jpg,png,jpeg',
-            "Duration_contract"=>'required|boolean',
+            "Duration_contract" => 'required|boolean',
             // "social_security"=>'required|boolean',
         ]);
         // dd($this->sign_date);
-        if ($this->contract ||$this->sign_date) {
+        if ($this->contract || $this->sign_date) {
             $this->validate([
                 // 'contract' => 'mimes:pdf',
                 'sign_date' => 'required|date',
-              ]);
-            
-            }
+            ]);
+        }
         if ($this->email == '') {
             $this->email = null;
         }
 
-        if($this->type =='part-time'){
+        if ($this->type == 'part-time') {
             $this->validate(['part_time' => 'required']);
         }
         $user = User::create([
@@ -145,12 +144,12 @@ class AddNewEmployee extends Component
             'social_security' => 0,
         ]);
 
-        if($this->type =='part-time'){
+        if ($this->type == 'part-time') {
 
-            $part_time=PartTime::create([
-                'user_id'=> $user->id,
-                'from'=> $this->start_date,
-                'status'=> 0,
+            $part_time = PartTime::create([
+                'user_id' => $user->id,
+                'from' => $this->start_date,
+                'status' => 0,
             ]);
         }
 
@@ -159,29 +158,29 @@ class AddNewEmployee extends Component
         $user->assignRole($this->role);
 
 
-        if($this->bank){
-            
+        if ($this->bank) {
+
             $this->validate([
                 'IBAN' => 'required',
-              ]);
+            ]);
 
-              $salary=Salary::Create([
-                "user_id"=>$user->id,
-                "bank"=>$this->bank,
-                "IBAN"=>$this->IBAN,
-                "type"=>$this->part_time,
-                "amount"=>$this->salary,
-              ]);
-              $salary->save();
+            $salary = Salary::Create([
+                "user_id" => $user->id,
+                "bank" => $this->bank,
+                "IBAN" => $this->IBAN,
+                "type" => $this->part_time,
+                "amount" => $this->salary,
+            ]);
+            $salary->save();
         }
 
         if ($this->contract) {
             $contractPath = $this->contract->storeAs('public/contracts/', $user->id . '.' . $this->contract->getClientOriginalExtension());
 
-            $contract=EmployeesContract::create([
-                "user_id" =>$user->id,
-                "image" =>$user->id . '.' . $this->contract->getClientOriginalExtension(),
-                "date" =>$this->sign_date,
+            $contract = EmployeesContract::create([
+                "user_id" => $user->id,
+                "image" => $user->id . '.' . $this->contract->getClientOriginalExtension(),
+                "date" => $this->sign_date,
             ]);
             $contract->save();
         }
@@ -215,21 +214,16 @@ class AddNewEmployee extends Component
     public function render()
     {
         $companies = Company::all();
-
         $departments = Department::leftJoin('company', 'company.id', '=', 'department.company_id')
             ->select('department.*', 'company.name as company_name')
             ->get();
-
         if ($this->company != '') {
             $departments = Department::leftJoin('company', 'company.id', '=', 'department.company_id')
                 ->select('department.*', 'company.name as company_name')->where('company_id', '=', $this->company)
                 ->get();
         }
-
         $roles = Role::all()->where('name', '!=', 'admin');
         $banks = Bank::get();
-
-
-        return view('livewire.employees.addNewEmployee', compact('departments', 'companies', 'roles','banks'));
+        return view('livewire.Employees.Create', compact('departments', 'companies', 'roles', 'banks'));
     }
 }

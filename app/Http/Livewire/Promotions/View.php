@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Employees;
+namespace App\Http\Livewire\Promotions;
 
 use App\Models\Promotion;
 use Livewire\Component;
 
-class ShowPromotion extends Component
+class View extends Component
 {
     public $promotion = '';
     public function mount($id)
@@ -19,6 +19,6 @@ class ShowPromotion extends Component
     }
     public function render()
     {
-        return view('livewire.employees.show-promotion',['promotion' => $this->promotion]);
+        return view('livewire.Promotions.View',['promotion' => $this->promotion]);
     }
 }

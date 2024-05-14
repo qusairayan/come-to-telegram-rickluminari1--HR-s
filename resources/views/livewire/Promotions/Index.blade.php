@@ -1,5 +1,4 @@
 <div>
-
     <style>
         .card .table td,
         .card .table th {
@@ -7,8 +6,6 @@
         }
     </style>
     <title>Promotions </title>
-
-
     <div class="table-settings mb-4">
         <div class="row align-items-center justify-content-between">
 
@@ -32,7 +29,7 @@
             <div class=" col-md-7 col-lg-3 col-xl-4">
 
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <a href="{{ route('promotions.add') }}"
+                    <a href="{{ route('promotions.create') }}"
                         class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
                         <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -42,7 +39,6 @@
                         </svg>
                         New Promotions
                     </a>
-
                 </div>
             </div>
 
@@ -212,7 +208,7 @@
                             <td class="border-0 fw-bold">
                                 <div class="btn-group">
                                         <a class="btn btn-primary"
-                                            href="{{ url('employees/promotions/show', ['id' => $promo->id]) }}"
+                                            href="{{ url('promotions/show', ['id' => $promo->id]) }}"
                                             target="_blank">Show</a>
                                 </div>
                             </td>
@@ -220,7 +216,7 @@
                                 <div class="btn-group">
                                     @if (!$promo->to)
                                         <a class="btn btn-success"
-                                            href="{{ url('employees/promotions/edit', ['id' => $promo->id]) }}"
+                                            href="{{ url('promotions/edit', ['id' => $promo->id]) }}"
                                             target="_blank">Edit</a>
                                     @endif
                                 </div>
