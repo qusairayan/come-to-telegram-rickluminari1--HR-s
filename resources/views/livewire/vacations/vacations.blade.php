@@ -107,7 +107,7 @@
                         <td class="border-0 fw-bold"><span class="fw-normal">{{ $vacation->date }}</span></td>
                         <td class="border-0 fw-bold"><span class="fw-normal">
                             @if($vacation->asset)
-                                <img src="/storage/vacation/{{$vacation->asset}}" alt="img">
+                                <img src=" {{asset($vacation->asset)}}" alt="img">
                                 @endif
                             </span></td>
                         <td class="border-0 fw-bold"><span class="fw-normal">{{ $vacation->reason }}</span></td>
