@@ -31,7 +31,7 @@ class AttendanceController extends Controller
     {
         $request->validated();
         $this->user = Auth::user();
-        $attendance = Attendence::where("user_id", $this->user->id)->orderBy("date", "DESC")->first();
+        $attendance = Attendence::where("user_id", $this->user->id)->where("date", date("Y-m-d"))->first();
         $leave = Leave::where("user_id", $this->user->id)->where("date", date("Y-m-d"))->where('status', '=', 1)->first();
         if ($request->type == 0) { //checkin
             if ($attendance) return response()->json(["success" => false, "message" => "You have already checked-in for today"], 400);
@@ -75,6 +75,7 @@ class AttendanceController extends Controller
                 }
             }
         } else { //checkout
+            $attendance = Attendence::where("user_id", $this->user->id)->orderBy("date", "DESC")->first();
             if ($attendance?->check_out) return response()->json(["success" => false, "message" => "You have already checked-out for today"], 400);
             if ($leave && !$leave->checkin) return response()->json(["success" => false, "message" => "You cannot check out before leave"], 400);
             if ($leave && !$leave->checkout) {
