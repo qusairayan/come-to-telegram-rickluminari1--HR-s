@@ -396,6 +396,7 @@ class AttendanceController extends Controller
         $user = Auth::user();
         $data = Attendence::where("user_id", $user->id)->orderBy("date", "DESC")->select("date", "check_in", "check_out")->first();
         if (!$data) return response()->json(["success" => true, "data" => 0], 200);
+        if ($data->check_in && $data->check_out) return response()->json(["success" => true, "data" => 0], 200);
         else {
             $scheduale =  Schedules::where("user_id", $user->id)->where("date", date("Y-m-d"))->orderBy("date", "DESC")->first();
             if ($scheduale) {
