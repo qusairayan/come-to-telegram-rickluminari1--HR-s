@@ -404,8 +404,8 @@ class AttendanceController extends Controller
                 $dateNow->modify('+15 hours');
                 $currentDateTime = new DateTime();
                 if (!$data->check_out && $dateNow >= $currentDateTime ){
-                    return response()->json(["success" => true, "data" => 0], 200);
-                }else return response()->json(["success" => true, "data" => 1], 200);
+                    return response()->json(["success" => true, "data" => 1], 200);
+                }else return response()->json(["success" => true, "data" => 0], 200);
             }
         }
         // if (!$data->check_out) return response()->json(["success" => true, "data" => 1], 200);
