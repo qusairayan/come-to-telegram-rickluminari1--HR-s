@@ -28,10 +28,8 @@ class VacationController extends Controller
         $vecation = Vacation::where("user_id", $user->id)->whereBetween("date", [$request->date, $period->format("Y-m-d")])->first();
         if ($vecation) return response()->json(["success" > false, "message" => "You have that day off"], 400);
         if ($request->hasFile("image")) {
-            $file = $request->file("image");
-            $path = $file->store('public/vacation');
-            $asset = "https://" . $request->getHttpHost() . "/" . $path;
-            $request->merge(['asset' => $asset]);
+            $path = $request->file("image")->store('vacation', 'public');
+            $request->merge(['asset' => $path]);
         }
         $request->merge(['user_id' => $user->id]);
         Vacation::create($request->all());
