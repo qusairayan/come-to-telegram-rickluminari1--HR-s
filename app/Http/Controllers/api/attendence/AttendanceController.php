@@ -9,9 +9,12 @@ use App\Models\Attendence;
 use App\Models\Lateness;
 use App\Models\Leave;
 use App\Models\Overtime;
+use App\Models\Schedule;
 use App\Models\Schedules;
 use App\Models\User;
 use Carbon\Carbon;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -39,7 +42,7 @@ class AttendanceController extends Controller
                         "user_id" => $this->user->id,
                         "date" => $this->day,
                         "check_in" => $this->time,
-                        "location_id"=>$request->location
+                        "location_id" => $request->location
                     ]);
                 $timeDifference = $this->timeDifference("checkIn");
                 if ($timeDifference) {
@@ -57,7 +60,7 @@ class AttendanceController extends Controller
                         "user_id" => $this->user->id,
                         "date" => $this->day,
                         "check_in" => $this->time,
-                        "location_id"=>$request->location
+                        "location_id" => $request->location
                     ]);
                     $timeDifference = $this->timeDifference("checkIn");
                     if (!$timeDifference) $timeDifference = 0;
@@ -391,9 +394,21 @@ class AttendanceController extends Controller
     public function checkAttendance()
     {
         $user = Auth::user();
-        $data = Attendence::where("user_id", $user->id)->orderBy("date","DESC")->select("date", "check_in", "check_out")->first();
-        if(!$data->check_out)return response()->json(["success" => true, "data" => 1], 200);
-        else return response()->json(["success" => true, "data" => 0], 200);
+        $data = Attendence::where("user_id", $user->id)->orderBy("date", "DESC")->select("date", "check_in", "check_out")->first();
+        if (!$data) return response()->json(["success" => true, "data" => 0], 200);
+        else {
+            $scheduale =  Schedules::where("user_id", $user->id)->where("date", date("Y-m-d"))->orderBy("date", "DESC")->first();
+            if ($scheduale) {
+                $dateNow = new DateTime($scheduale->date . " " . $scheduale->from);
+                $dateNow->modify('+15 hours');
+                $currentDateTime = new DateTime();
+                if (!$data->check_out && $dateNow->format('Y-m-d H:i:s') >= $currentDateTime ){
+                    return response()->json(["success" => true, "data" => 0], 200);
+                }else return response()->json(["success" => true, "data" => 1], 200);
+            }
+        }
+        // if (!$data->check_out) return response()->json(["success" => true, "data" => 1], 200);
+        // else return response()->json(["success" => true, "data" => 0], 200);
         // return response()->json(["success" => true, "data" => $data], 200);
         // if (!$data) return response()->json(["success" => true, "data" => 0], 200);
         // if ($data->check_in && $data->check_out) return response()->json(["success" => true, "data" => 2], 200);
