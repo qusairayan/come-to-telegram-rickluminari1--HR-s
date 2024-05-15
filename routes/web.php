@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TransferController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\ForgotPassword;
@@ -50,7 +51,7 @@ use App\Http\Livewire\Salaries\DepositSalaryPdf;
 use App\Http\Livewire\Salaries\NewSalary;
 use App\Http\Livewire\Users;
 use App\Http\Livewire\VacationPdf;
-
+Route::get('/transfer', [TransferController::class, 'transfer'])->name('transfer'); //->middleware('role:viewroles')
 Route::middleware("guest")->group(function () {
     Route::redirect('/', '/login');
     Route::get('/login', Login::class)->name('login');
