@@ -24,6 +24,7 @@ class Schedule extends Component
     public $name = null;
     public $off = null;
     public $schduleId = null;
+    public $holiday = null;
     public function render()
     {
         $companies = Company::all();
@@ -50,7 +51,7 @@ class Schedule extends Component
         //     ->get();
         return view('livewire.schedule.schedule',  ['users' => $users, 'schdules' => $schdules, 'departments' => $departments,"companies"=>$companies]);
     }
-    public function edit($userId, $name, $from, $to, $schduleId, $off, $date)
+    public function edit($userId, $holiday, $from, $to, $schduleId, $off, $date)
     {
         $this->name = User::where("id",$userId)->pluck("name")[0];
         $this->editFrom = $from;
@@ -58,6 +59,7 @@ class Schedule extends Component
         $this->off = $off == 1 ? true : false;
         $this->editDate = $date;
         $this->schduleId = $schduleId;
+        $this->holiday = $holiday == 1 ? true : false;
     }
     public function save()
     {
@@ -65,11 +67,13 @@ class Schedule extends Component
             'editFrom' => 'required',
             'editTo' => 'required',
             'off' => 'required|boolean',
+            'holiday' => 'required|boolean',
         ]);
         Schedules::where('id',$this->schduleId)->update([
             'from' => $this->editFrom,
             'to' => $this->editTo,
             'off-day' => $this->off == 1 ? 1 : NULL,
+            'holiday' => $this->holiday == 1 ? 1 : NULL,
         ]);
         return redirect()->route("schedule");
     }

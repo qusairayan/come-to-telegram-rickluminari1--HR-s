@@ -156,7 +156,7 @@
                                     @endif
                                     @if ($schdule->date > date('Y-m-d'))
                                         <td class="fw-bold align-items-center">
-                                            <a wire:click="edit({{ $schdule->user_id }}, '{{ $user->name }}','{{ $schdule->from }}','{{ $schdule->to }}','{{ $schdule->id }}','{{ $schdule->off }}','{{ $schdule->date }}')"
+                                            <a wire:click="edit({{ $schdule->user_id }}, '{{ $schdule->holiday }}','{{ $schdule->from }}','{{ $schdule->to }}','{{ $schdule->id }}','{{ $schdule->off }}','{{ $schdule->date }}')"
                                                 data-bs-toggle="modal" data-bs-target="#modal-notification"
                                                 class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
                                                 Edit
@@ -232,11 +232,10 @@
                             @enderror
                         </div>
                         <div style="align-items: center" class="py-1 text-start d-flex w-100">
-                            <input class="custom-control-input" type="checkbox" {{ $off == true ? 'checked' : '' }} wire:model="off"
-                            value="{{ $off }}">
+                            <input class="custom-control-input" type="checkbox" {{ $off == true ? 'checked' : '' }} wire:model="off" value="{{ $off }}">
                             <h6 style="flex: 50%" class="h5 px-2 py-2">Off Day:</h6>
-                            <div class="input-group mt-1">
-                            </div>
+                            <input class="custom-control-input" type="checkbox" {{ $holiday == true ? 'checked' : '' }} wire:model="holiday" value="{{ $holiday }}">
+                            <h6 style="flex: 50%" class="h5 px-2 py-2">Official Holiday:</h6>
                         </div>
                     </div>
                     <div class="modal-footer">

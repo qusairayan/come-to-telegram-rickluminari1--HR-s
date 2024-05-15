@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time("from_time");
             $table->time("to_time");
             $table->json("off")->comment("the days off");
+            $table->boolean("holiday")->comment("Official holidayf")->default(null);
             $table->timestamps();
         });
     }
