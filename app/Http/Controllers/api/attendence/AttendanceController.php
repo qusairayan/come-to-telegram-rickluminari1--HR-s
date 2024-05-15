@@ -360,10 +360,6 @@ class AttendanceController extends Controller
                         }
                     }
 
-
-
-
-
                     if ($success) {
                         return response()->json([
                             'success' => true,
@@ -409,11 +405,5 @@ class AttendanceController extends Controller
                 }else return response()->json(["success" => true, "data" => 1], 200);
             }
         }
-        // if (!$data->check_out) return response()->json(["success" => true, "data" => 1], 200);
-        // else return response()->json(["success" => true, "data" => 0], 200);
-        // return response()->json(["success" => true, "data" => $data], 200);
-        // if (!$data) return response()->json(["success" => true, "data" => 0], 200);
-        // if ($data->check_in && $data->check_out) return response()->json(["success" => true, "data" => 2], 200);
-        // if ($data->check_in) return response()->json(["success" => true, "data" => 1], 200);
     }
 }
