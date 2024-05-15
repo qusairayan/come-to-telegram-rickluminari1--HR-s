@@ -52,7 +52,7 @@ class Schedule extends Component
     }
     public function edit($userId, $name, $from, $to, $schduleId, $off, $date)
     {
-        $this->name = User::where("id",17)->pluck("name")[0];
+        $this->name = User::where("id",$userId)->pluck("name")[0];
         $this->editFrom = $from;
         $this->editTo = $to;
         $this->off = $off == 1 ? true : false;

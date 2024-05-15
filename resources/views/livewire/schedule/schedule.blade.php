@@ -231,11 +231,11 @@
                                 <div class="invalid-feedback py-2"> {{ $message }} </div>
                             @enderror
                         </div>
-                        <div class="py-1 text-start d-flex w-100">
-                            <h4 style="flex: 50%" class="h5 py-2">Off Day:</h4>
+                        <div style="align-items: center" class="py-1 text-start d-flex w-100">
+                            <input class="custom-control-input" type="checkbox" {{ $off == true ? 'checked' : '' }} wire:model="off"
+                            value="{{ $off }}">
+                            <h6 style="flex: 50%" class="h5 px-2 py-2">Off Day:</h6>
                             <div class="input-group mt-1">
-                                <input type="checkbox" {{ $off == true ? 'checked' : '' }} wire:model="off"
-                                    value="{{ $off }}">
                             </div>
                         </div>
                     </div>
