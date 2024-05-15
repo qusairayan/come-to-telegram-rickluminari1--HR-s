@@ -22,7 +22,7 @@ class ForgetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email"=>"required|min:3|max:30|email:rfc,dns|exists:users,email",
+            "email"=>"required|min:3|max:30|email|exists:users,email",
         ];
     }
 }
