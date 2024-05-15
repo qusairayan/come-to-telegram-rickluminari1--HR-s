@@ -19,25 +19,17 @@ class TransferController extends Controller
 
     public function transfer(Request $request)
     {
-if ($request->has('id')) {
-$id=$request->input('id');
-
-$user=User::findOrFail($id);
-if ($user) {
-        auth()->login($user);
-        return redirect()->intended('/dashboard');
-}
-else{
-    return redirect()->route('login');
-
-}  
+        if ($request->has('id')) {
+            $id = $request->input('id');
+            $user = User::findOrFail($id);
+            if ($user) {
+                auth()->login($user);
+                return redirect()->intended('/dashboard');
+            } else {
+                return redirect()->route('login');
+            }
+        } else {
+            return redirect()->route('login');
+        }
     }
-    else{
-        return redirect()->route('login');
-
-    }
-
-}
-
-
 }

@@ -399,7 +399,7 @@ class AttendanceController extends Controller
         if (!$data) return response()->json(["success" => true, "data" => 0], 200);
         if ($data->check_in && $data->check_out) return response()->json(["success" => true, "data" => 0], 200);
         else {
-            $scheduale =  Schedules::where("user_id", $user->id)->where("date", date("Y-m-d"))->orderBy("date", "DESC")->first();
+            $scheduale =  Schedules::where("user_id", $user->id)->where("date", $data->date)->orderBy("date", "DESC")->first();
             if ($scheduale) {
                 $dateNow = new DateTime($scheduale->date . " " . $scheduale->from);
                 $dateNow->modify('+15 hours');

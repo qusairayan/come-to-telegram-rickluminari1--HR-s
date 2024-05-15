@@ -31,7 +31,8 @@ class SetSchedule extends Component
         $start_date = Carbon::parse($this->dateFrom);
         $end_date = Carbon::parse($this->dateTo);
         $current_date = $start_date->copy();
-
+        // dd($start_date->date);
+        // Schedules::whereBetween("date",[])->get();
         for ($i = 0; $current_date->lte($end_date); $i++) {
             $dayName = $current_date->format('l');
             Schedules::create([
