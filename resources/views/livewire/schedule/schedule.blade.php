@@ -32,19 +32,19 @@
                         <label for="comapny">Company</label>
                         <select class="form-select mb-0" id="company" aria-label="company select example"
                             wire:model="company" autofocus required>
-    
+
                             <option value=""selected>Select Employee's Company</option>
                             @foreach ($companies as $comp)
                                 <option value="{{ $comp->id }}">
                                     {{ $comp->name }} </option>
                             @endforeach
-    
-    
+
+
                         </select>
                         @error('company')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-    
+
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -133,7 +133,6 @@
                                 <th class="border-0">From</th>
                                 <th class="border-0">To</th>
                                 <th class="border-0">Action</th>
-                                <th class="border-0">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,7 +142,7 @@
                                     <td class="fw-bold align-items-center">
                                         {{ $schdule->date }}
                                     </td>
-                                    @if ($schdule->from == null)
+                                    @if ($schdule->off == null)
                                         <td colspan="2" class="fw-bold align-items-center text-danger">
                                             Off
                                         </td>
@@ -157,18 +156,15 @@
                                     @endif
                                     @if ($schdule->date > date('Y-m-d'))
                                         <td class="fw-bold align-items-center">
-                                            <div class="col-md-3 col-12 btn-toolbar mb-2 mb-md-0">
-                                                <a wire:click="edit({{ $schdule->user_id }}, '{{ $user->name }}','{{ $schdule->from }}','{{ $schdule->to }}','{{ $schdule->id }}','{{ $schdule->off }}','{{ $schdule->date }}')"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-notification"
-                                                    class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
-                                                    Edit
-                                                </a>
-
-                                            </div>
-                                            {{-- <button wire:click="edit" class="btn btn-success text-transparent">edit</button>  --}}
+                                            <a wire:click="edit({{ $schdule->user_id }}, '{{ $user->name }}','{{ $schdule->from }}','{{ $schdule->to }}','{{ $schdule->id }}','{{ $schdule->off }}','{{ $schdule->date }}')"
+                                                data-bs-toggle="modal" data-bs-target="#modal-notification"
+                                                class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+                                                Edit
+                                            </a>
                                         </td>
-                                        <td class="fw-bold align-items-center"> <button wire:click="delete({{$schdule->id}})"
-                                                class="btn btn-danger text-transparent">delete</button> </td>
+                                    @else
+                                        <td class="fw-bold align-items-center ">--
+                                        </td>
                                     @endif
                                 </tr>
                             @endforeach
@@ -238,7 +234,8 @@
                         <div class="py-1 text-start d-flex w-100">
                             <h4 style="flex: 50%" class="h5 py-2">Off Day:</h4>
                             <div class="input-group mt-1">
-                                <input type="checkbox" {{$off == true ? 'checked' : ''}}  wire:model="off" value="{{ $off }}">
+                                <input type="checkbox" {{ $off == true ? 'checked' : '' }} wire:model="off"
+                                    value="{{ $off }}">
                             </div>
                         </div>
                     </div>

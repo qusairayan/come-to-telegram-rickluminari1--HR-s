@@ -52,7 +52,7 @@ class Schedule extends Component
     }
     public function edit($userId, $name, $from, $to, $schduleId, $off, $date)
     {
-        $this->name = $name;
+        $this->name = User::where("id",17)->pluck("name")[0];
         $this->editFrom = $from;
         $this->editTo = $to;
         $this->off = $off == 1 ? true : false;
@@ -72,9 +72,5 @@ class Schedule extends Component
             'off-day' => $this->off == 1 ? 1 : NULL,
         ]);
         return redirect()->route("schedule");
-    }
-    public function delete($id)
-    {
-        Schedules::destroy($id);
     }
 }
