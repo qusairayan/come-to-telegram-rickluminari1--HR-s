@@ -64,7 +64,7 @@ class SetSchedule extends Component
                     'to' => $this->timeTo,
                     'off-day' => in_array($dayName, $this->offDay) == true ? 1 : null,
                 ]);
-                $current_date->addDay(); // Move to the next day
+                $current_date->addDay();
             }
             return redirect()->route("schedule");
         }

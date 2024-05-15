@@ -142,7 +142,7 @@
                                     <td class="fw-bold align-items-center">
                                         {{ $schdule->date }}
                                     </td>
-                                    @if ($schdule->off == null)
+                                    @if ($schdule->off == 1)
                                         <td colspan="2" class="fw-bold align-items-center text-danger">
                                             Off
                                         </td>
