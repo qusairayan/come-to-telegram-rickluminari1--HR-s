@@ -59,6 +59,7 @@ Route::middleware("guest")->group(function () {
     Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
     Route::get('/reset-password/{id}', ResetPassword::class)->name('reset-password')->middleware('signed');
 });
+// test
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardIndex::class)->name('dashboard.index');
     Route::get('/profile', ProfileIndex::class)->name('profile.index');
