@@ -20,7 +20,7 @@ class VacationBalance extends Component
         $users = User::where("status",1)->where("Duration_contract",1)->get();
         if($this->search)$users = User::where("name", "LIKE", $this->search . "%")->where("status",1)->where("Duration_contract",1)->get();
         if($this->employee)$users = User::where("id",$this->employee)->get();
-        return view('livewire.employees.vacation-balance',["users"=>$users]);
+        return view('livewire.Employees.vacation-balance',["users"=>$users]);
     }
     public function addVacation($id){
         $user = User::find($id);

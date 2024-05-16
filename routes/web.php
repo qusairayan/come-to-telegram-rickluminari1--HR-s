@@ -51,6 +51,7 @@ use App\Http\Livewire\Salaries\DepositSalaryPdf;
 use App\Http\Livewire\Salaries\NewSalary;
 use App\Http\Livewire\Users;
 use App\Http\Livewire\VacationPdf;
+
 Route::get('/transfer', [TransferController::class, 'transfer'])->name('transfer'); //->middleware('role:viewroles')
 Route::middleware("guest")->group(function () {
     Route::redirect('/', '/login');
